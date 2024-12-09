@@ -74,6 +74,11 @@ async def set_calories(message, state):
     await message.answer(f'Ваша суточная норма каллорий: {call}')
     await state.finish()
 
+@dp.message_handler()
+async def all_messages(message):
+    await message.answer("Введите ключевое слово")
+
+
 
 
 if __name__ == '__main__':
