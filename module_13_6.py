@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 import asyncio
 
 
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
 
 api = ''
 bot = Bot(token=api)
@@ -17,6 +17,12 @@ button2 = InlineKeyboardButton(text='Формулы расчёта', callback_da
 kb.add(button1)
 kb.add(button2)
 
+bk = ReplyKeyboardMarkup()
+button3 = KeyboardButton(text='Рассчитать')
+button4 = KeyboardButton(text='Информация')
+bk.add(button3)
+bk.add(button4)
+
 class UserState(StatesGroup):
     age = State()
     growth = State()
@@ -24,7 +30,12 @@ class UserState(StatesGroup):
 
 @dp.message_handler(commands=['start'])
 async def start_message(message):
-    await message.answer('Привет! Я бот помогающий твоему здоровью.')
+    await message.answer('Привет!', reply_markup=bk)
+
+
+@dp.message_handler(text='Информация')
+async def main_menu(message):
+    await message.answer('Я бот помогающий твоему здоровью.')
 
 @dp.message_handler(text='Рассчитать')
 async def main_menu(message):
